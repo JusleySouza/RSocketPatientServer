@@ -6,9 +6,11 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.ju.springboot.rsocket.model.Claim;
 import com.ju.springboot.rsocket.model.ClinicalData;
 import com.ju.springboot.rsocket.model.Patient;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Controller
@@ -29,4 +31,8 @@ public class RSocketPatientController {
 		return Mono.empty().then();
 	}
 	
+	@MessageMapping("claim-stream")
+	public Flux<Claim> requestStream(){
+		return Flux.just(new Claim(1000f, "MRI Scan"),new Claim(2000f, "Surgery"),new Claim(3000f, "Food"));
+	}
 }
