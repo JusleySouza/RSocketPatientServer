@@ -1,5 +1,7 @@
 package com.ju.springboot.rsocket.controllers;
 
+import java.time.Duration;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -33,6 +35,9 @@ public class RSocketPatientController {
 	
 	@MessageMapping("claim-stream")
 	public Flux<Claim> requestStream(){
-		return Flux.just(new Claim(1000f, "MRI Scan"),new Claim(2000f, "Surgery"),new Claim(3000f, "Food"));
+		return Flux.just(
+				new Claim(1000f, "MRI Scan"),
+				new Claim(2000f, "Surgery"),
+				new Claim(3000f, "Food")).delayElements(Duration.ofSeconds(2));
 	}
 }
